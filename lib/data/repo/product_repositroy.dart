@@ -8,7 +8,7 @@ import 'package:flutter_application_1/data/module/product_module.dart';
 
 
 
-final repository = ProductRepository(ProductRemoteDataSource(httpCline: httpClient),);
+final products = ProductRepository(ProductRemoteDataSource(httpCline: httpClient),);
 
 abstract class IProductRepository{
 Future<List<ProductEntity>> getAll(int sort);

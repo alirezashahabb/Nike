@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/style.dart';
 
 import 'package:flutter_application_1/data/repo/banner_repositroy.dart';
+import 'package:flutter_application_1/screen/home_screen.dart';
 
 
 void main() {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-   
+   fontFamily: 'Vazir',
        textTheme:  TextTheme(
         bodyMedium: defaultTextStyle,
         titleLarge: defaultTextStyle.copyWith(
@@ -44,18 +45,10 @@ class MyApp extends StatelessWidget {
         onPrimary: Colors.white,
        )
       ),
-      home: const HemeScreen(),
+      home: const Directionality(
+        textDirection: TextDirection.rtl,
+        child: HomeScreen()),
     );
   }
 }
 
-class HemeScreen extends StatelessWidget {
-  const HemeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('سلام خوبی منم خوبم'),),
-    );
-  }
-}

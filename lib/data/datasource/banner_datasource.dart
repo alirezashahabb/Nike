@@ -15,7 +15,7 @@ class BannerRemoteDataSource with Validator implements IBannerDataSource{
       validatorResponse(response);
 final banner = <BannerEntity> [];
       for (var element in (response.data as List)) {
-        banner.add(BannerEntity.fromJson(element));
+        banner.add(BannerEntity.fromJson(element),);
       }
       return banner;
   }
