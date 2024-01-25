@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_application_1/common/exception.dart';
+
+import 'package:flutter_application_1/common/validator_responce.dart';
 import 'package:flutter_application_1/data/module/product_module.dart';
 
 
@@ -10,7 +11,7 @@ Future<List<ProductEntity>> getAll(int sort);
 Future<List<ProductEntity>> search(String keyTeam);
 }
 
-class ProductRemoteDataSource implements IProductDataSource{
+class ProductRemoteDataSource with Validator implements IProductDataSource{
   final Dio httpCline ;
 
   ProductRemoteDataSource({required this.httpCline}); 
@@ -38,8 +39,3 @@ class ProductRemoteDataSource implements IProductDataSource{
 
 }
 
-validatorResponse(Response response){
-if(response.statusCode != 200){
- throw AppException();
-}
-}

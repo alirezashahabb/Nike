@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/style.dart';
-import 'package:flutter_application_1/data/module/product_module.dart';
-import 'package:flutter_application_1/data/repo/product_repositroy.dart';
+
+import 'package:flutter_application_1/data/repo/banner_repositroy.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    repository.getAll(ProductSort.popular).then((value) {
+    banner.getBanner().then((value) {
         debugPrint(value.toString());
     }).catchError((e){
  debugPrint(e.toString());
