@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/bloc/home_bloc.dart';
+import 'package:flutter_application_1/common/exception.dart';
 import 'package:flutter_application_1/common/utils.dart';
 
 import 'package:flutter_application_1/data/repo/banner_repositroy.dart';
@@ -62,19 +63,11 @@ class HomeScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             } else if (state is HomeErrorState) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(state.exception.message),
-                    ElevatedButton(
-                        onPressed: () {
-                          BlocProvider.of<HomeBloc>(context)
-                              .add(HomeRefreshEvent());
-                        },
-                        child: const Text('تلاش مجدد'))
-                  ],
-                ),
+              return AppErrorWidget(
+                exception: state.exception,
+                onTap: () {
+                  BlocProvider.of<HomeBloc>(context).add(HomeRefreshEvent());
+                },
               );
             } else {
               throw Exception('');
@@ -82,6 +75,29 @@ class HomeScreen extends StatelessWidget {
           },
         ),
       )),
+    );
+  }
+}
+
+class AppErrorWidget extends StatelessWidget {
+  final AppException exception;
+  final GestureTapCallback onTap;
+  const AppErrorWidget({
+    super.key,
+    required this.exception,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(exception.message),
+          ElevatedButton(onPressed: onTap, child: const Text('تلاش مجدد'))
+        ],
+      ),
     );
   }
 }

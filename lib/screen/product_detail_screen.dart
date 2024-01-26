@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/image_loading_service.dart';
 import 'package:flutter_application_1/common/utils.dart';
 import 'package:flutter_application_1/data/module/product_module.dart';
+import 'package:flutter_application_1/widgets/comment_list.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   final ProductEntity products;
@@ -90,7 +91,10 @@ class ProductDetailScreen extends StatelessWidget {
                   )
                 ],
               ),
-            )
+            ),
+
+            /// this is for Comments
+            CommentList(id: products.id)
           ],
         ),
       ),
