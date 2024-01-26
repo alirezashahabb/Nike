@@ -29,8 +29,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-   fontFamily: 'Vazir',
+   fontFamily: 'Vazir', 
        textTheme:  TextTheme(
+        titleMedium: defaultTextStyle.apply(color: LightThemeColors.secondaryTextColor),
+        labelLarge: defaultTextStyle,
         bodyMedium: defaultTextStyle,
         titleLarge: defaultTextStyle.copyWith(
           fontWeight: FontWeight.w700
