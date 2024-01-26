@@ -76,6 +76,7 @@ class CommentItems extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            /// comment title and data
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -89,6 +90,8 @@ class CommentItems extends StatelessWidget {
             const SizedBox(
               height: 4,
             ),
+
+            /// comment
             Text(
               comments.email,
               style: Theme.of(context).textTheme.bodySmall,
