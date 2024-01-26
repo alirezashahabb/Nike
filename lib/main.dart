@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/style.dart';
 
 import 'package:flutter_application_1/data/repo/coomet_repositroy.dart';
+import 'package:flutter_application_1/screen/auth_screen.dart';
 import 'package:flutter_application_1/screen/home_screen.dart';
 import 'package:flutter_application_1/screen/root_screen.dart';
 
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
           )),
       home: const Directionality(
         textDirection: TextDirection.rtl,
-        child: RootScreen(),
+        child: AuthScreen(),
       ),
     );
   }
