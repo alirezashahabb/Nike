@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/bloc/bloc/comment_list_bloc.dart';
+
+import 'package:flutter_application_1/bloc/comment/comment_list_bloc.dart';
 import 'package:flutter_application_1/common/style.dart';
 import 'package:flutter_application_1/data/module/coomet_module.dart';
 

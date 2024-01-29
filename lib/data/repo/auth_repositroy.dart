@@ -13,15 +13,14 @@ abstract class IAthRepository {
 }
 
 class AuthRepository implements IAthRepository {
-  static final ValueNotifier<AuthInfo?> authChange = ValueNotifier(null);
   final IAuthDataSource dataSource;
+  static final ValueNotifier<AuthInfo?> authChange = ValueNotifier(null);
 
   AuthRepository(this.dataSource);
   @override
   Future<void> login(String username, String password) async {
     final AuthInfo authInfo = await dataSource.login(username, password);
     _presidentToken(authInfo);
-    debugPrint('accsesc toke ${authInfo.accessToken}');
   }
 
   @override
@@ -35,10 +34,7 @@ class AuthRepository implements IAthRepository {
     try {
       final AuthInfo authInfo = await dataSource.register(username, password);
       _presidentToken(authInfo);
-      debugPrint('access toke ${authInfo.accessToken}');
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+    } catch (e) {}
   }
 
   /// this method for save access token and refreshToken
@@ -46,15 +42,20 @@ class AuthRepository implements IAthRepository {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("access_token", authInfo.accessToken);
     sharedPreferences.setString("refresh_token", authInfo.refreshToken);
+
+    print('Tokens saved: ${authInfo.accessToken}, ${authInfo.refreshToken}');
   }
 
-  /// this method for read access token
   Future<void> readAuth() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     final String accessToken =
         sharedPreferences.getString("access_token") ?? "";
     final String refreshToken =
         sharedPreferences.getString("refresh_token") ?? "";
+
+    print(
+        'Tokens retrieved:  acces is :  $accessToken,  refresh is : $refreshToken');
+
     if (accessToken.isNotEmpty && refreshToken.isNotEmpty) {
       authChange.value = AuthInfo(accessToken, refreshToken);
     }

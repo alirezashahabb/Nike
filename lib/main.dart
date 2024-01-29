@@ -4,7 +4,7 @@ import 'package:flutter_application_1/data/repo/auth_repositroy.dart';
 
 import 'package:flutter_application_1/screen/auth_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   authRepository.readAuth();
 
