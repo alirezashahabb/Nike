@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/style.dart';
+import 'package:flutter_application_1/data/repo/auth_repositroy.dart';
 
-import 'package:flutter_application_1/data/repo/coomet_repositroy.dart';
 import 'package:flutter_application_1/screen/auth_screen.dart';
-import 'package:flutter_application_1/screen/home_screen.dart';
-import 'package:flutter_application_1/screen/root_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  authRepository.readAuth();
+
   runApp(const MyApp());
 }
 
@@ -16,11 +17,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    comments.getComment(9).then((value) {
-      debugPrint(value.toString());
-    }).catchError((e) {
-      debugPrint(e.toString());
-    });
+    // comments.getComment(9).then((value) {
+    //   debugPrint(value.toString());
+    // }).catchError((e) {
+    //   debugPrint(e.toString());
+    // });
     const TextStyle defaultTextStyle = TextStyle(fontFamily: 'Vazir');
     return MaterialApp(
       debugShowCheckedModeBanner: false,

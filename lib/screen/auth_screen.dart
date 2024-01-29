@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/data/repo/Auth_repositroy.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -8,6 +9,10 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  final TextEditingController _userName =
+      TextEditingController(text: 'test@gmail.com');
+  final TextEditingController _passWord = TextEditingController(text: '123456');
+
   bool isLogin = true;
   @override
   Widget build(BuildContext context) {
@@ -75,20 +80,24 @@ class _AuthScreenState extends State<AuthScreen> {
               const SizedBox(
                 height: 16,
               ),
-              const TextField(
+              TextField(
+                controller: _userName,
                 keyboardType: TextInputType.emailAddress,
-                style: TextStyle(color: onBackground),
-                decoration: InputDecoration(label: Text('ادرس ایمیل')),
+                style: const TextStyle(color: onBackground),
+                decoration: const InputDecoration(label: Text('ادرس ایمیل')),
               ),
               const SizedBox(
                 height: 16,
               ),
-              const TextFelidPassword(onBackground: onBackground),
+              TextFelidPassword(
+                  onBackground: onBackground, password: _passWord),
               const SizedBox(
                 height: 16,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  authRepository.login(_userName.text, _passWord.text);
+                },
                 child: Text(
                   isLogin ? 'ورود' : 'ثبت نام',
                 ),
@@ -117,9 +126,10 @@ class _AuthScreenState extends State<AuthScreen> {
                     Text(
                       isLogin ? ' ثبت نام' : 'ورود',
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        decoration: TextDecoration.underline,
-                      ),
+                          color: Theme.of(context).colorScheme.primary,
+                          decoration: TextDecoration.underline,
+                          decorationColor:
+                              Theme.of(context).colorScheme.primary),
                     ),
                   ],
                 ),
@@ -133,9 +143,11 @@ class _AuthScreenState extends State<AuthScreen> {
 }
 
 class TextFelidPassword extends StatefulWidget {
+  final TextEditingController password;
   const TextFelidPassword({
     super.key,
     required this.onBackground,
+    required this.password,
   });
 
   final Color onBackground;
@@ -149,6 +161,7 @@ class _TextFelidPasswordState extends State<TextFelidPassword> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: widget.password,
       style: TextStyle(color: widget.onBackground),
       keyboardType: TextInputType.visiblePassword,
       obscureText: obscureText,
