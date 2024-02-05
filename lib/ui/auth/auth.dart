@@ -38,7 +38,7 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
             snackBarTheme: SnackBarThemeData(
                 backgroundColor: themeData.colorScheme.primary,
-                contentTextStyle: const TextStyle(fontFamily: 'IranYekan')),
+                contentTextStyle: const TextStyle(fontFamily: 'Vazir')),
             colorScheme:
                 themeData.colorScheme.copyWith(onSurface: onBackground),
             inputDecorationTheme: InputDecorationTheme(
