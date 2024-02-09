@@ -1,55 +1,73 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/data/auth_info.dart';
-import 'package:flutter_application_1/data/repo/auth_repository.dart';
-import 'package:flutter_application_1/ui/auth/auth.dart';
+import 'package:flutter_application_1/ui/cart/bloc/cart_bloc.dart';
+import 'package:flutter_application_1/ui/widgets/image.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../data/repo/cart_repositroy.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({Key? key}) : super(key: key);
+  const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("سبد خرید"),
-      ),
-      body: ValueListenableBuilder<AuthInfo?>(
-        valueListenable: AuthRepository.authChangeNotifier,
-        builder: (context, authState, child) {
-          bool isAuthenticated =
-              authState != null && authState.accessToken.isNotEmpty;
-          return SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(isAuthenticated
-                    ? 'خوش آمدید'
-                    : 'لطفا وارد حساب کاربری خود شوید'),
-                isAuthenticated
-                    ? ElevatedButton(
-                        onPressed: () {
-                          authRepository.signOut();
-                        },
-                        child: const Text('خروج از حساب'))
-                    : ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context, rootNavigator: true).push(
-                              MaterialPageRoute(
-                                  builder: (context) => const AuthScreen()));
-                        },
-                        child: const Text('ورود')),
-                ElevatedButton(
-                    onPressed: () async {
-                      await authRepository.refreshToken();
-                    },
-                    child: const Text('Refresh Token')),
-              ],
-            ),
-          );
+      body: BlocProvider(
+        create: (context) {
+          var bloc = CartBloc(cartRepository);
+          bloc.add(CartInitEvent());
+          return bloc;
         },
+        child: BlocBuilder<CartBloc, CartState>(
+          builder: (context, state) {
+            if (state is CartLoadingState) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is CartSuccessState) {
+              return ListView.builder(
+                itemCount: state.cartResponse.cartItem.length,
+                itemBuilder: (context, index) {
+                  var items = state.cartResponse.cartItem[index];
+                  return Container(
+                    margin: const EdgeInsets.all(4),
+                    width: MediaQuery.of(context).size.width,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surface,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          blurRadius: 10,
+                        )
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: ImageLoadingService(
+                                imageUrl: items.product.imageUrl,
+                                radius: 4,
+                              ),
+                            ),
+                            Text(items.product.title)
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                },
+              );
+            } else if (state is CartErrorState) {
+              return Text(state.appException.message);
+            } else {
+              throw Exception('state is not supported');
+            }
+          },
+        ),
       ),
     );
   }

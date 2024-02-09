@@ -7,4 +7,8 @@ sealed class CartEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class CartInitEvent extends CartEvent {}
+class CartAddToBasketEvent extends CartEvent {
+  final int productId;
+
+  const CartAddToBasketEvent({required this.productId});
+}

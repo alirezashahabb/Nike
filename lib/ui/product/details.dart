@@ -7,7 +7,8 @@ import 'package:flutter_application_1/common/utils.dart';
 import 'package:flutter_application_1/data/product.dart';
 import 'package:flutter_application_1/data/repo/cart_repositroy.dart';
 import 'package:flutter_application_1/theme.dart';
-import 'package:flutter_application_1/ui/cart/bloc/cart_bloc.dart';
+import 'package:flutter_application_1/ui/product/bloc/cart_bloc.dart';
+
 import 'package:flutter_application_1/ui/product/comment/comment_list.dart';
 import 'package:flutter_application_1/ui/widgets/image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

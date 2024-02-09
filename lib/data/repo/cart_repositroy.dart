@@ -1,6 +1,7 @@
 import 'package:flutter_application_1/common/http_client.dart';
-import 'package:flutter_application_1/data/cart_list.dart';
-import 'package:flutter_application_1/data/cart_responce.dart';
+
+import 'package:flutter_application_1/data/add_to_cart_response.dart';
+import 'package:flutter_application_1/data/cart_response.dart';
 import 'package:flutter_application_1/data/source/cart_data_source.dart';
 
 final cartRepository = CartRepository(
@@ -8,11 +9,11 @@ final cartRepository = CartRepository(
 );
 
 abstract class ICartRepository {
-  Future<CartResponse> add(int id);
-  Future<CartResponse> changeCount(int count, int cartItem);
+  Future<AddToCartResponse> add(int id);
+  Future<AddToCartResponse> changeCount(int count, int cartItem);
   Future<void> deleted(int cartItem);
   Future<int> count();
-  Future<List<CartItemEntity>> geAll();
+  Future<CartResponse> geAll();
 }
 
 class CartRepository implements ICartRepository {
@@ -20,12 +21,12 @@ class CartRepository implements ICartRepository {
 
   CartRepository({required this.dataSource});
   @override
-  Future<CartResponse> add(int id) {
+  Future<AddToCartResponse> add(int id) {
     return dataSource.add(id);
   }
 
   @override
-  Future<CartResponse> changeCount(int count, int cartItem) {
+  Future<AddToCartResponse> changeCount(int count, int cartItem) {
     // TODO: implement changeCount
     throw UnimplementedError();
   }
@@ -43,8 +44,5 @@ class CartRepository implements ICartRepository {
   }
 
   @override
-  Future<List<CartItemEntity>> geAll() {
-    // TODO: implement geAll
-    throw UnimplementedError();
-  }
+  Future<CartResponse> geAll() => dataSource.geAll();
 }

@@ -94,3 +94,78 @@ class _RootScreenState extends State<RootScreen> {
                     offstage: selectedScreenIndex != index, child: child)));
   }
 }
+
+
+///////////////////////////////////////////////////
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_application_1/data/auth_info.dart';
+// import 'package:flutter_application_1/data/repo/auth_repository.dart';
+// import 'package:flutter_application_1/data/repo/cart_repositroy.dart';
+// import 'package:flutter_application_1/ui/auth/auth.dart';
+
+// class CartScreen extends StatefulWidget {
+//   const CartScreen({Key? key}) : super(key: key);
+
+//   @override
+//   State<CartScreen> createState() => _CartScreenState();
+// }
+
+// class _CartScreenState extends State<CartScreen> {
+//   @override
+//   void initState() {
+//     cartRepository.geAll().then((value) {
+//       debugPrint(value.toString());
+//     }).catchError((e) {
+//       debugPrint(e.toString());
+//     });
+//     super.initState();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         centerTitle: true,
+//         title: const Text("سبد خرید"),
+//       ),
+//       body: ValueListenableBuilder<AuthInfo?>(
+//         valueListenable: AuthRepository.authChangeNotifier,
+//         builder: (context, authState, child) {
+//           bool isAuthenticated =
+//               authState != null && authState.accessToken.isNotEmpty;
+//           return SizedBox(
+//             width: MediaQuery.of(context).size.width,
+//             child: Column(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               crossAxisAlignment: CrossAxisAlignment.center,
+//               children: [
+//                 Text(isAuthenticated
+//                     ? 'خوش آمدید'
+//                     : 'لطفا وارد حساب کاربری خود شوید'),
+//                 isAuthenticated
+//                     ? ElevatedButton(
+//                         onPressed: () {
+//                           authRepository.signOut();
+//                         },
+//                         child: const Text('خروج از حساب'))
+//                     : ElevatedButton(
+//                         onPressed: () {
+//                           Navigator.of(context, rootNavigator: true).push(
+//                               MaterialPageRoute(
+//                                   builder: (context) => const AuthScreen()));
+//                         },
+//                         child: const Text('ورود')),
+//                 ElevatedButton(
+//                     onPressed: () async {
+//                       await authRepository.refreshToken();
+//                     },
+//                     child: const Text('Refresh Token')),
+//               ],
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
