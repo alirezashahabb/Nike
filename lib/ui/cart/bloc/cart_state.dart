@@ -26,3 +26,5 @@ class CartErrorState extends CartState {
   // TODO: implement props
   List<Object> get props => [appException];
 }
+
+class CartAuthRequairedState extends CartState {}

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/data/repo/auth_repository.dart';
 import 'package:flutter_application_1/ui/cart/cart.dart';
 import 'package:flutter_application_1/ui/home/home.dart';
 
@@ -58,8 +59,19 @@ class _RootScreenState extends State<RootScreen> {
               _navigator(
                   _profileKey,
                   profileIndex,
-                  const Center(
-                    child: Text('Profile'),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Profile'),
+                        ElevatedButton(
+                          onPressed: () {
+                            authRepository.signOut();
+                          },
+                          child: const Text('logOut'),
+                        )
+                      ],
+                    ),
                   )),
             ],
           ),

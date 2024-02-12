@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/repo/auth_repository.dart';
 import 'package:flutter_application_1/theme.dart';
+import 'package:flutter_application_1/ui/auth/auth.dart';
 import 'package:flutter_application_1/ui/root.dart';
 
 void main() {
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
     const defaultTextStyle = TextStyle(
         fontFamily: 'Vazir', color: LightThemeColors.primaryTextColor);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         textTheme: TextTheme(
@@ -36,7 +38,9 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const Directionality(
-          textDirection: TextDirection.rtl, child: RootScreen()),
+        textDirection: TextDirection.rtl,
+        child: RootScreen(),
+      ),
     );
   }
 }
