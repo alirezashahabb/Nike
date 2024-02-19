@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_application_1/common/exceptions.dart';
@@ -21,7 +19,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           if (auth == null || auth.accessToken.isEmpty) {
             emit(CartAuthRequairedState());
           } else {
-            await loadCartItem(emit);
+            await loadCartItem(emit, event.isRefresh);
           }
         } else if (event is CartAuthInfoChangeEvent) {
           if (event.authInfo == null || event.authInfo!.accessToken.isEmpty) {
@@ -30,7 +28,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             );
           } else {
             if (state is CartAuthRequairedState) {
-              await loadCartItem(emit);
+              await loadCartItem(emit, false);
             }
           }
         }
@@ -39,8 +37,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   /// this is for load Cart
-  Future<void> loadCartItem(Emitter<CartState> emit) async {
+  Future<void> loadCartItem(Emitter<CartState> emit, bool isRefresh) async {
     try {
+      if (!isRefresh) {
+        emit(CartLoadingState());
+      }
       final res = await repository.geAll();
       if (res.cartItem.isEmpty) {
         emit(CartEmptyState());

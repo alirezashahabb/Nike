@@ -9,8 +9,9 @@ sealed class CartEvent extends Equatable {
 
 class CartInitEvent extends CartEvent {
   final AuthInfo? authInfo;
+  final bool isRefresh;
 
-  const CartInitEvent({required this.authInfo});
+  const CartInitEvent({required this.authInfo, this.isRefresh = false});
 }
 
 /// یا این تغبرات چه state  هایی باید ایجاد شود
