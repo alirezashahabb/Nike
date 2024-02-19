@@ -28,3 +28,6 @@ class CartErrorState extends CartState {
 }
 
 class CartAuthRequairedState extends CartState {}
+
+/// this is for add cart
+class CartEmptyState extends CartState {}

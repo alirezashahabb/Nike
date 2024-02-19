@@ -3,8 +3,11 @@ import 'package:flutter_application_1/common/utils.dart';
 import 'package:flutter_application_1/data/repo/auth_repository.dart';
 import 'package:flutter_application_1/ui/auth/auth.dart';
 import 'package:flutter_application_1/ui/cart/bloc/cart_bloc.dart';
+import 'package:flutter_application_1/ui/home/home.dart';
+import 'package:flutter_application_1/ui/widgets/emptry_view.dart';
 import 'package:flutter_application_1/ui/widgets/image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../data/repo/cart_repositroy.dart';
 
@@ -39,6 +42,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
     return Scaffold(
+      backgroundColor: const Color(0xfff5f5f5),
       body: BlocProvider(
         create: (context) {
           var bloc = CartBloc(cartRepository);
@@ -186,21 +190,32 @@ class _CartScreenState extends State<CartScreen> {
                 },
               );
             } else if (state is CartAuthRequairedState) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('ورود به حساب کاربری'),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const AuthScreen(),
-                        ));
-                      },
-                      child: const Text('ورود'),
-                    ),
-                  ],
+              return EmptyView(
+                title: 'لطفا وارد حساب کاربری خود شوید',
+                callBack: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const AuthScreen(),
+                    ));
+                  },
+                  child: const Text('ورود'),
                 ),
+                image: Lottie.asset('assets/img/cart_login.json'),
+              );
+            } else if (state is CartEmptyState) {
+              return EmptyView(
+                title: 'سبد خرید خالی است',
+                callBack: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const HomeScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text('مشاهده محصولات'),
+                ),
+                image: Lottie.asset('assets/img/cart_empty.json'),
               );
             } else if (state is CartErrorState) {
               return Text(state.appException.message);
