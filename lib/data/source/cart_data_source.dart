@@ -46,8 +46,7 @@ class CartItemRemoteDataSource
 
   @override
   Future<void> deleted(int cartItem) {
-    // TODO: implement deleted
-    throw UnimplementedError();
+    return httpCline.post('cart/remove', data: {"cart_item_id": cartItem});
   }
 
   @override

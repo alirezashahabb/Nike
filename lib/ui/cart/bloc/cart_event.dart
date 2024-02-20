@@ -20,3 +20,13 @@ class CartAuthInfoChangeEvent extends CartEvent {
 
   const CartAuthInfoChangeEvent({required this.authInfo});
 }
+
+class CartDeletedButtonEvent extends CartEvent {
+  final int productId;
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [productId];
+
+  const CartDeletedButtonEvent({required this.productId});
+}

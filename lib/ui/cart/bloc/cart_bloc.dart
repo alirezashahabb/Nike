@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/exceptions.dart';
 import 'package:flutter_application_1/data/auth_info.dart';
 import 'package:flutter_application_1/data/cart_response.dart';
@@ -20,6 +21,31 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             emit(CartAuthRequairedState());
           } else {
             await loadCartItem(emit, event.isRefresh);
+          }
+
+          ///this is for button deleted clicked in cart
+        } else if (event is CartDeletedButtonEvent) {
+          try {
+            if (state is CartSuccessState) {
+              final succesState = (state as CartSuccessState);
+              final cartItem = succesState.cartResponse.cartItem
+                  .firstWhere((element) => element.id == event.productId);
+              cartItem.deletedButtonLoading = true;
+              emit(CartSuccessState(cartResponse: succesState.cartResponse));
+            }
+            await repository.deleted(event.productId);
+            if (state is CartSuccessState) {
+              final succesState = (state as CartSuccessState);
+              succesState.cartResponse.cartItem
+                  .removeWhere((element) => element.id == event.productId);
+              if (succesState.cartResponse.cartItem.isEmpty) {
+                emit(CartEmptyState());
+              } else {
+                emit(CartSuccessState(cartResponse: succesState.cartResponse));
+              }
+            }
+          } catch (e) {
+            debugPrint(e.toString());
           }
         } else if (event is CartAuthInfoChangeEvent) {
           if (event.authInfo == null || event.authInfo!.accessToken.isEmpty) {
