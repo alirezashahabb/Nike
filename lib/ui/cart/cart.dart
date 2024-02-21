@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/repo/auth_repository.dart';
 import 'package:flutter_application_1/ui/auth/auth.dart';
 import 'package:flutter_application_1/ui/cart/bloc/cart_bloc.dart';
+import 'package:flutter_application_1/ui/cart/cart_info.dart';
 import 'package:flutter_application_1/ui/home/home.dart';
 import 'package:flutter_application_1/ui/widgets/cart_item.dart';
 import 'package:flutter_application_1/ui/widgets/emptry_view.dart';
@@ -95,18 +96,37 @@ class _CartScreenState extends State<CartScreen> {
                   );
                 },
                 child: ListView.builder(
-                  itemCount: state.cartResponse.cartItem.length,
                   itemBuilder: (context, index) {
-                    var items = state.cartResponse.cartItem[index];
-                    return CartItem(
-                      items: items,
-                      themeData: themeData,
-                      onTap: () {
-                        cartBloc
-                            ?.add(CartDeletedButtonEvent(productId: items.id));
-                      },
-                    );
+                    if (index < state.cartResponse.cartItem.length) {
+                      var items = state.cartResponse.cartItem[index];
+                      return CartItem(
+                        items: items,
+                        themeData: themeData,
+                        deletedButton: () {
+                          cartBloc?.add(
+                            CartDeletedButtonEvent(productId: items.id),
+                          );
+                        },
+                        deacrementButton: () {
+                          if (items.count > 1) {
+                            cartBloc?.add(DecreaseCountBottnClickedEvent(
+                                productId: items.id));
+                          }
+                        },
+                        increamentButton: () {
+                          cartBloc?.add(IncreaCountBottnClickedEvent(
+                              productId: items.id));
+                        },
+                      );
+                    } else {
+                      return CartInfo(
+                        peypablePrice: state.cartResponse.payablePrice,
+                        shippingCoast: state.cartResponse.shippingCost,
+                        totlaPrice: state.cartResponse.totalPrice,
+                      );
+                    }
                   },
+                  itemCount: state.cartResponse.cartItem.length + 1,
                 ),
               );
             } else if (state is CartAuthRequairedState) {

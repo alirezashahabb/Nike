@@ -3,9 +3,9 @@ import 'package:flutter_application_1/data/cart_list.dart';
 /// this class for CartItems List
 class CartResponse {
   final List<CartItemEntity> cartItem;
-  final int payablePrice;
-  final int totalPrice;
-  final int shippingCost;
+  int payablePrice;
+  int totalPrice;
+  int shippingCost;
 
   CartResponse.fromJson(Map<String, dynamic> json)
       : cartItem = CartItemEntity.parseJsonArray(json['cart_items']),

@@ -31,11 +31,15 @@ class CartItemRemoteDataSource
 
   @override
   Future<AddToCartResponse> changeCount(int count, int cartItem) async {
-    final Response response = await httpCline.post('cart/changeCount', data: {
-      "cart_item_id": cartItem,
-      "count": count,
-    });
-    return AddToCartResponse.fromJson(response.data);
+    try {
+      final Response response = await httpCline.post('cart/changeCount', data: {
+        "count": cartItem,
+        "cart_item_id": count,
+      });
+      return AddToCartResponse.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override

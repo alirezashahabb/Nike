@@ -9,12 +9,16 @@ class CartItem extends StatelessWidget {
     super.key,
     required this.items,
     required this.themeData,
-    required this.onTap,
+    required this.deletedButton,
+    required this.increamentButton,
+    required this.deacrementButton,
   });
 
   final CartItemEntity items;
   final ThemeData themeData;
-  final GestureTapCallback onTap;
+  final GestureTapCallback deletedButton;
+  final GestureTapCallback increamentButton;
+  final GestureTapCallback deacrementButton;
 
   @override
   Widget build(BuildContext context) {
@@ -64,41 +68,55 @@ class CartItem extends StatelessWidget {
                     Text('تعداد', style: themeData.textTheme.bodySmall),
                     Row(
                       children: [
-                        Container(
-                          height: 20,
-                          width: 20,
-                          decoration: BoxDecoration(
-                            border: Border.all(
+                        GestureDetector(
+                          onTap: increamentButton,
+                          child: Container(
+                            height: 20,
+                            width: 20,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: const Icon(
+                              Icons.add,
+                              size: 15,
                               color: Colors.grey,
                             ),
-                          ),
-                          alignment: Alignment.center,
-                          child: const Icon(
-                            Icons.add,
-                            size: 15,
-                            color: Colors.grey,
                           ),
                         ),
                         const SizedBox(
                           width: 8,
                         ),
-                        Text(items.count.toString()),
+                        items.changeCountLoading
+                            ? const SizedBox(
+                                width: 10,
+                                height: 10,
+                                child: CircularProgressIndicator(),
+                              )
+                            : Text(
+                                items.count.toString(),
+                              ),
                         const SizedBox(
                           width: 8,
                         ),
-                        Container(
-                          height: 20,
-                          width: 20,
-                          decoration: BoxDecoration(
-                            border: Border.all(
+                        GestureDetector(
+                          onTap: deacrementButton,
+                          child: Container(
+                            height: 20,
+                            width: 20,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: const Icon(
+                              Icons.remove,
+                              size: 15,
                               color: Colors.grey,
                             ),
-                          ),
-                          alignment: Alignment.center,
-                          child: const Icon(
-                            Icons.remove,
-                            size: 15,
-                            color: Colors.grey,
                           ),
                         ),
                       ],
@@ -140,7 +158,8 @@ class CartItem extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 )
               : TextButton(
-                  onPressed: onTap, child: const Text('حذف از سبد خرید'))
+                  onPressed: deletedButton,
+                  child: const Text('حذف از سبد خرید'))
         ],
       ),
     );
